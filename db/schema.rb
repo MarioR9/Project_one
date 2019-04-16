@@ -20,8 +20,8 @@ ActiveRecord::Schema.define(version: 20190415212542) do
   end
 
   create_table "sessions", force: :cascade do |t|
-    t.string  "member"
-    t.string  "trainer"
+    t.integer "member_id"
+    t.integer "trainer_id"
     t.integer "time"
   end
 
