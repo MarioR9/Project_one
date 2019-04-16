@@ -1,6 +1,6 @@
 class Session < ActiveRecord::Base
-	belongs_to :members 
-	belongs_to :trainers
+	belongs_to :member
+	belongs_to :trainer
 
 
 
