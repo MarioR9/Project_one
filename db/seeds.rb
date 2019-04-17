@@ -17,7 +17,6 @@ Session.find_or_create_by(member_id: m3.id, trainer_id: t2.id)
 Session.find_or_create_by(member_id: m4.id, trainer_id: t4.id)
 Session.find_or_create_by(member_id: m5.id, trainer_id: t1.id)
 Session.find_or_create_by(member_id: m2.id, trainer_id: t3.id)
-Session.find_or_create_by(member_id: m5.id, trainer_id: t1.id)
 Session.find_or_create_by(member_id: m5.id, trainer_id: t4.id)
 Session.find_or_create_by(member_id: m2.id, trainer_id: t3.id)
 

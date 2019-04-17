@@ -4,13 +4,19 @@ class Member < ActiveRecord::Base
     has_many(:sessions)
     has_many(:trainers, {through: :sessions})
 
-    
+	#instance class needs an instance of a Member    
     def find_booked_trainers
-    #member can find all the trainers they have booked.
-    #find trainer_id and mache it with trainer book and return trainer 
-	    session_t = Session.all.find_all {|session| session.member == self}
-	    			# session.trainer_id
-	    session_t.map{|session|session.trainer}
+    	n = 1;
+      #member can find all the trainers they have booked.
+      #find trainer_id and mache it with trainer book and return trainer 
+	  session_t = Session.all.find_all {|session| session.member == self}  	
+	  # session.trainer_id
+	  find_trainers = session_t.map{|session|session.trainer}
+	  #iterating find_trainers to output custome msg for every instance of a trainer stored.
+	  find_trainers.each do |x|
+	  	puts "#{n}. Booked #{x.name} #{x.yrs_of_exp} Years of Experience"
+	  		n += 1
+	  end
 	end
     
 
@@ -48,13 +54,8 @@ class Member < ActiveRecord::Base
 		puts "Member id is: #{new_member.id}.\nSave this for your records."
     end
     
- 	def self.member_intro
- 		puts "TRAINIFY" #TTY
- 		puts "1. About Us"
-		puts "2. Become a Member?"
-		puts "3. Log In"
-		puts "4. Contact"
-		m_answear = STDIN.gets.chomp
+
+	def	self.member_authe(m_answear)
 		if m_answear == "2"
  		conter = 0
  		while conter < 1 do
@@ -67,30 +68,42 @@ class Member < ActiveRecord::Base
 		 	a2 = gets.chomp
 			puts "Welcome: #{Member.find(a2).first_name} #{Member.find(a2).last_name}"
 		end
+		return a2
 	end
 
  	#Main menu
- 	def main_menu
+ 	def self.member_menu(number)
+ 		# counter = 0
+ 		# while counter < 1 do
  		puts "Main Menu"
  		puts "Select an Option:"
  		puts "1. View My Profile" #press any key to return to main menu
  		puts "2. Book a Session"
  		puts "3. View My Sessions"
  		puts "4. Featured Trainer" #most pop trainer
- 			 answer = STDIN.gets.chomp
+ 		answer = STDIN.gets.chomp
  			case answer
 				when "1"
-					get_member_profile#take cli to member profile
-				when 2
-					#new session
-				when 3
-					#return all sessions for that member
+					Member.find(number).get_member_profile#take cli to member profile
+
+				when "2"
+					puts "TRAINIFY \nTrainers"
+					Trainer.display_all_trainers
+					puts "  "
+					puts "Input Trainer's Id"
+					t_id = STDIN.gets.chomp
+					Session.book_session(number,t_id)
+
+				when "3"
+					Member.find(number).find_booked_trainers#return all sessions for that member
 				when 4
 					#return most pop trainer
 				else
 		puts "Invalid Input, please select a number between 1 and 4."
- 	end
-end 
+
+			
+ 		end
+	end 
 
 
 
