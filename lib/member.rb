@@ -16,7 +16,7 @@ class Member < ActiveRecord::Base
 
     def get_member_profile
 
-    	Member.all.select{|x| x.id == self.id}
+    	Member.all.select{|member| member.id == self.id}
     	#iterate through all members
     	#get a member profile using member_id
     	#display profile
@@ -45,13 +45,14 @@ class Member < ActiveRecord::Base
    new_member =  Member.create(first_name: answer_fn, last_name: answer_ln, age: answer_age, gender: gender)
 
     end
-#     def most_popular_trainer
-# #finds the most popular trainer by going through all the instances of
-# #trainer and returns the trainer with the most sessions
-# 		# most_sessions_int = 0
-# 		Session.all.map {|session| session.trainer}
-# 		binding.pry
-#     end
+    
+ #    def most_popular_trainer
+ # 		#find the trainer tha has the most booked sessions.
+				
+	# 	Session.all.select(:trainer_id).group(:trainer_id)
+	# #User.select(:first,:email).group(:first,:email).having("count(*) > 1")	
+	
+ #    end
 
 
 end 

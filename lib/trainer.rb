@@ -7,7 +7,7 @@ class Trainer < ActiveRecord::Base
     	Session.all.select {|session|session.trainer_id == self.id}
     end	
 
-
+    
    
 	    
 end 
