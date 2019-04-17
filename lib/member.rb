@@ -49,27 +49,26 @@ class Member < ActiveRecord::Base
 			else answer_g == 3
 				gender = "Non-binary"
 			end
-  		new_member = Member.create(first_name: answer_fn, last_name: answer_ln, age: answer_age, gender: gender)
-  		new_member.save
-		puts "Welcome  #{new_member.first_name}"
-		puts "Member id is: #{new_member.id}.\nSave this for your records."
+  		@new_member = Member.create(first_name: answer_fn, last_name: answer_ln, age: answer_age, gender: gender)
+  		
+		puts "Welcome  #{@new_member.first_name}"
+		puts "Member id is: #{@new_member.id}.\nSave this for your records."
+		return @new_member.id
     end
     
 
-	def	self.member_authe(m_answear)
-		if m_answear == "2"
- 		conter = 0
- 		while conter < 1 do
-	 		self.receive_new_user
-		 	conter = 1
-			end
-		elsif 
-			m_answear == "3"
+	def	self.member_authe(new_a)
+		if new_a == 2
+ 			self.receive_new_user
+		 elsif 
+			new_a == 3
 			puts "Welcome back! \nPlease Enter Member Id"
-		 	a2 = gets.chomp
+		 	a2 = STDIN.gets.chomp
 			puts "Welcome: #{Member.find(a2).first_name} #{Member.find(a2).last_name}"
+			return a2
 		end
-		return a2
+
+
 	end
 
  	#Main menu
@@ -102,11 +101,9 @@ class Member < ActiveRecord::Base
 					#return most pop trainer
 				when "5"
 					Process.exit(0) #terminate the process
-				else
-		puts "Invalid Input, please select a number between 1 and 4."
-
-			
+			else
  		end
+ 		
 	end 
 
 
