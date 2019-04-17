@@ -15,15 +15,23 @@ class Member < ActiveRecord::Base
     
 
     def get_member_profile
-
-    	Member.all.select{|member| member.id == self.id}
-    	#iterate through all members
-    	#get a member profile using member_id
-    	#display profile	
-    end 
+    	member_info = Member.all.select{|member| member.id == self.id}
+    	puts "Member ID: #{member_info[0].id}"
+    	puts "First Name: #{member_info[0].first_name}"
+    	puts "Last Name: #{member_info[0].last_name}"
+    	puts "Age: #{member_info[0].age}"
+    	puts "Gender: #{member_info[0].gender}"
+    	puts "Press any key to return to Main Menu."
+    	# iterate through all members
+    	# get a member profile using member_id
+    	# display profile	
+    	    end 
 
 	def self.receive_new_user
-		
+		#About Us
+		#Become a Member?
+		#Log In
+		#Contact
 		puts "Welcome"
 		puts "Hello!\nEnter your first name:"
 		answer_fn = STDIN.gets.chomp
@@ -42,7 +50,7 @@ class Member < ActiveRecord::Base
 			end
   new_member = Member.create(first_name: answer_fn, last_name: answer_ln, age: answer_age, gender: gender)
 		puts "Welcome  #{new_member.first_name}"
-		puts "Member id is: #{new_member.id}"
+		puts "Member id is: #{new_member.id}.\nSave this for your records."
     end
     
  	def self.member_intro
@@ -68,7 +76,28 @@ class Member < ActiveRecord::Base
  	end
 
  	#Main menu
- 	
+ 	def main_menu
+ 		puts "Main Menu"
+ 		puts "Select an Option:"
+ 		puts "1. View My Profile" #press any key to return to main menu
+ 		puts "2. Book a Session"
+ 		puts "3. View My Sessions"
+ 		puts "4. Featured Trainer" #most pop trainer
+ 			 answer = STDIN.gets.chomp
+ 			case answer
+				when 1
+					get_member_profile #take cli to member profile
+				when 2
+					#new session
+				when 3
+					#return all sessions for that member
+				when 4
+					#return most pop trainer
+				else
+	puts "Invalid Input, please select a number between 1 and 4."
+ 	end
+end 
+
 
 
 
