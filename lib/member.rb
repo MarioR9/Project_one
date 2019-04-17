@@ -25,15 +25,10 @@ class Member < ActiveRecord::Base
     	# iterate through all members
     	# get a member profile using member_id
     	# display profile	
-    	    end 
+    end 
 
 	def self.receive_new_user
-		#About Us
-		#Become a Member?
-		#Log In
-		#Contact
-		puts "Welcome"
-		puts "Hello!\nEnter your first name:"
+		puts "GET STARTED TODAY!\nEnter your first name:"
 		answer_fn = STDIN.gets.chomp
 		puts "Enter your last name:"
 		answer_ln = STDIN.gets.chomp
@@ -48,32 +43,31 @@ class Member < ActiveRecord::Base
 			else answer_g == 3
 				gender = "Non-binary"
 			end
-  new_member = Member.create(first_name: answer_fn, last_name: answer_ln, age: answer_age, gender: gender)
+  		new_member = Member.create(first_name: answer_fn, last_name: answer_ln, age: answer_age, gender: gender)
 		puts "Welcome  #{new_member.first_name}"
 		puts "Member id is: #{new_member.id}.\nSave this for your records."
     end
     
  	def self.member_intro
+ 		puts "TRAINIFY" #TTY
+ 		puts "1. About Us"
+		puts "2. Become a Member?"
+		puts "3. Log In"
+		puts "4. Contact"
+		m_answear = STDIN.gets.chomp
+		if m_answear == "2"
  		conter = 0
  		while conter < 1 do
-	 	puts "Are you A member?"
-		 a1 = gets.chomp
-		 if a1 == "n"
-		 	self.receive_new_user
+	 		self.receive_new_user
 		 	conter = 1
-		 elsif a1 == "y"
-		 	puts "Enter Member Id"
-		 	 a2 = gets.chomp
-		 puts "Welcome: #{Member.find(a2).first_name} #{Member.find(a2).last_name}"
-		 	
-		 	conter = 1
-		 else 
-		 	puts "invalid input"
-
-		 end
+			end
+		elsif 
+			m_answear == "3"
+			puts "Welcome back! \nPlease Enter Member Id"
+		 	a2 = gets.chomp
+			puts "Welcome: #{Member.find(a2).first_name} #{Member.find(a2).last_name}"
 		end
-
- 	end
+	end
 
  	#Main menu
  	def main_menu
@@ -85,8 +79,8 @@ class Member < ActiveRecord::Base
  		puts "4. Featured Trainer" #most pop trainer
  			 answer = STDIN.gets.chomp
  			case answer
-				when 1
-					get_member_profile #take cli to member profile
+				when "1"
+					get_member_profile#take cli to member profile
 				when 2
 					#new session
 				when 3
@@ -94,7 +88,7 @@ class Member < ActiveRecord::Base
 				when 4
 					#return most pop trainer
 				else
-	puts "Invalid Input, please select a number between 1 and 4."
+		puts "Invalid Input, please select a number between 1 and 4."
  	end
 end 
 
