@@ -1,8 +1,10 @@
+
 class CommandLineInterface 
-	
+
 	
 	def run
-	  receive_new_user
+	 Member.member_intro
+		#main menu
 	end
 
 

@@ -19,12 +19,10 @@ class Member < ActiveRecord::Base
     	Member.all.select{|member| member.id == self.id}
     	#iterate through all members
     	#get a member profile using member_id
-    	#display profile
-
+    	#display profile	
     end 
 
-
-	def receive_new_user
+	def self.receive_new_user
 		
 		puts "Welcome"
 		puts "Hello!\nEnter your first name:"
@@ -42,17 +40,37 @@ class Member < ActiveRecord::Base
 			else answer_g == 3
 				gender = "Non-binary"
 			end
-   new_member =  Member.create(first_name: answer_fn, last_name: answer_ln, age: answer_age, gender: gender)
-
+  new_member = Member.create(first_name: answer_fn, last_name: answer_ln, age: answer_age, gender: gender)
+		puts "Welcome  #{new_member.first_name}"
+		puts "Member id is: #{new_member.id}"
     end
     
- #    def most_popular_trainer
- # 		#find the trainer tha has the most booked sessions.
-				
-	# 	Session.all.select(:trainer_id).group(:trainer_id)
-	# #User.select(:first,:email).group(:first,:email).having("count(*) > 1")	
-	
- #    end
+ 	def self.member_intro
+ 		conter = 0
+ 		while conter < 1 do
+	 	puts "Are you A member?"
+		 a1 = gets.chomp
+		 if a1 == "n"
+		 	self.receive_new_user
+		 	conter = 1
+		 elsif a1 == "y"
+		 	puts "Enter Member Id"
+		 	 a2 = gets.chomp
+		 puts "Welcome: #{Member.find(a2).first_name} #{Member.find(a2).last_name}"
+		 	
+		 	conter = 1
+		 else 
+		 	puts "invalid input"
+
+		 end
+		end
+
+ 	end
+
+ 	#Main menu
+ 	
+
+
 
 
 end 
