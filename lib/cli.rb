@@ -15,7 +15,11 @@ class CommandLineInterface
 		puts "2. Become a Member?"
 		puts "3. Log In"
 		puts "4. Contact"
+		puts "5. Exit"
 		@m_answear = STDIN.gets.chomp
+		if @m_answear == "5"
+			Process.exit(0)
+		end
 	end
 
  end

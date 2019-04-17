@@ -50,6 +50,7 @@ class Member < ActiveRecord::Base
 				gender = "Non-binary"
 			end
   		new_member = Member.create(first_name: answer_fn, last_name: answer_ln, age: answer_age, gender: gender)
+  		new_member.save
 		puts "Welcome  #{new_member.first_name}"
 		puts "Member id is: #{new_member.id}.\nSave this for your records."
     end
@@ -80,7 +81,8 @@ class Member < ActiveRecord::Base
  		puts "1. View My Profile" #press any key to return to main menu
  		puts "2. Book a Session"
  		puts "3. View My Sessions"
- 		puts "4. Featured Trainer" #most pop trainer
+ 		puts "4. Featured Trainer"
+ 		puts "5. Exit" #most pop trainer
  		answer = STDIN.gets.chomp
  			case answer
 				when "1"
@@ -96,8 +98,10 @@ class Member < ActiveRecord::Base
 
 				when "3"
 					Member.find(number).find_booked_trainers#return all sessions for that member
-				when 4
+				when "4"
 					#return most pop trainer
+				when "5"
+					Process.exit(0) #terminate the process
 				else
 		puts "Invalid Input, please select a number between 1 and 4."
 
