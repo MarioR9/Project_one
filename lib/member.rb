@@ -5,32 +5,32 @@ class Member < ActiveRecord::Base
     has_many(:sessions)
     has_many(:trainers, {through: :sessions})
 
-	#instance class needs an instance of a Member    
+	#instance class needs an instance of a Member
     def find_booked_trainers
     	n = 1
       #member can find all the trainers they have booked.
-      #find trainer_id and mache it with trainer book and return trainer 
+      #find trainer_id and mache it with trainer book and return trainer
 	  session_t = Session.all.find_all {|session|session.member == self}
-	  
+
 	  # session.trainer_id
 
 	  find_trainers = session_t.map{|session|session.trainer}
 	  #iterating find_trainers to output custome msg for every instance of a trainer stored.
 	  	puts "Booked Sessions"
-	  	 # binding.pry	
+	  	 # binding.pry
 	  find_trainers.each do |trainer|
 
-	  	puts "----------------------------------".green  
+	    	puts "----------------------------------".green
        puts "| Booked Trainer: #{trainer.name}".green
        puts "| Yrs exp: #{trainer.yrs_of_exp}".green
-       puts "| id: #{trainer.id}".green        
+       puts "| id: #{trainer.id}".green
        puts "| Session ID ##{n}".green
-        puts "----------------------------------".green 
+        puts "----------------------------------".green
         n += 1
 	  	end
-	  	
+
 	end
-    
+
 
     def get_member_profile
     	member_info = Member.all.select{|member| member.id == self.id}
@@ -39,11 +39,11 @@ class Member < ActiveRecord::Base
     	puts "Last Name: #{member_info[0].last_name}".blue
     	puts "Age: #{member_info[0].age}".blue
     	puts "Gender: #{member_info[0].gender}".blue
-    	
+
     	# iterate through all members
     	# get a member profile using member_id
-    	# display profile	
-    end 
+    	# display profile
+    end
 
 	def self.register_new_user
 		puts "GET STARTED TODAY!\nEnter your first name:"
@@ -67,9 +67,9 @@ class Member < ActiveRecord::Base
 		self.member_menu(new_member.id)
 		# binding.pry
 	end
-    
 
-	def	self.welome_member		
+
+	def	self.welome_member
  			puts "Welcome back! \nPlease Enter Member Id"
 		 	member = STDIN.gets.chomp
 			puts "Welcome: #{Member.find(member).first_name} #{Member.find(member).last_name}"
@@ -87,7 +87,7 @@ class Member < ActiveRecord::Base
  		puts "3. View My Sessions"
  		puts "4. Featured Trainer" #most pop trainer
  		puts "5. Cancel a Session"
- 		puts "Press return to Exit" 
+ 		puts "Press return to Exit"
  		answer = STDIN.gets.chomp
  			case answer
 				when "1"
@@ -111,18 +111,19 @@ class Member < ActiveRecord::Base
 				when "5"
 					Member.find(number).remove_session
 			else
- 		end	
-	end 
+ 		end
+	end
 
 	def remove_session
 		member_session = Session.all.select {|session|session.member == self}
-		member_session.each do |session| 
+    session_count = member_session.count
+		member_session.each do |session|
 
-		 puts"----------------------------------".green  
+		     puts"----------------------------------".green
        puts "| Booked Trainer: #{session.trainer.name}".green
-       puts "| Yrs exp: #{session.trainer.yrs_of_exp}".green      
+       puts "| Yrs exp: #{session.trainer.yrs_of_exp}".green
        puts "| Session ID ##{session.id}".green
-        puts "----------------------------------".green 
+        puts "----------------------------------".green
 
         counter = 0
  		while counter < 1 do
@@ -134,9 +135,21 @@ class Member < ActiveRecord::Base
         			session.delete
         			puts "Session #{session}"
         				counter = 1
+                Member.member_menu(self.id)
         			elsif cancel_input == "n"
-        				counter = 1
-        			elsif cancel_input == "e"
+                
+                if session_count < 0
+                  session_count -= 1
+                  puts "You have no more booked sessions."
+                  counter = 1
+                  puts "Press '5' to return to the main menu."
+                end_of_list_input = STDIN.gets.chomp
+                if end_of_list_input == 5
+                  Member.member_menu(self.id)
+                else
+                  puts "Invalid Input."
+                    end
+                elsif cancel_input == "e"
         				counter = 1
         				Member.member_menu(self.id)
         				else
@@ -144,9 +157,8 @@ class Member < ActiveRecord::Base
         			end
         		end
         	end
-        
-	end
+        end
+      	end
 
 
-end 
-
+end
