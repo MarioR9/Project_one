@@ -6,9 +6,11 @@ class CommandLineInterface
 
 	
 	def run
-	member_intro
+		counter = 0
+		while counter <1
+		member_intro
 	#main menu
-	Member.member_menu(@m_ans)
+		end
 	end
 	
 	def member_intro
@@ -23,19 +25,18 @@ class CommandLineInterface
 		puts "3. Log In"
 		puts "4. Contact"
 		puts "5. Exit"
-		@m_ans = STDIN.gets.chomp
-		if @m_ans == "5"
+		m_a = STDIN.gets.chomp
+		if m_a == "5"
 			Process.exit(0)
-		elsif @m_ans == "1"
+		elsif m_a == "1"
 				about_us
-		elsif @m_ans == "4"
+		elsif m_a == "4"
 				contact
-		elsif @m_ans == "2"
-			Member.member_authe(2)
-			@m_ans = "2"
-		elsif @m_ans == "3"
-			Member.member_authe(3)
-			@m_ans = "3"
+		elsif m_a == "2"
+			Member.register_new_user
+		elsif m_a == "3"
+			Member.welome_member
+			
 		end	
 
 	end

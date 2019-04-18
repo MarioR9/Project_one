@@ -8,8 +8,16 @@ class Trainer < ActiveRecord::Base
     end	
 
     def self.display_all_trainers
-    	Trainer.all.map do |x|
-    	puts "*#{x.name} trainer for #{x.yrs_of_exp} years *-* Trainer id: #{x.id}" 
+        puts "Avalible Trainers:"
+
+    	Trainer.all.map do |trainer|
+        puts "--------------------------".yellow  
+       puts "| Trainer: #{trainer.name}".yellow
+       puts "| Yrs exp: #{trainer.yrs_of_exp}".yellow
+       puts "| id: #{trainer.id}".yellow            
+        puts "--------------------------".yellow   
+        sleep(0.1)
+ 
 		end
 
     end
