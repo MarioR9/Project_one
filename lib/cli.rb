@@ -1,4 +1,7 @@
 require 'pry'
+require 'colorize'
+
+
 class CommandLineInterface 
 
 	
@@ -14,7 +17,7 @@ class CommandLineInterface
 		 ║ ╠╦╝╠═╣║║║║║╠╣ ╚╦╝
 		 ╩ ╩╚═╩ ╩╩╝╚╝╩╚   ╩ 
 		
-		" #TTY
+		".blue #TTY
  		puts "1. About Us"
 		puts "2. Become a Member?"
 		puts "3. Log In"
@@ -38,15 +41,14 @@ class CommandLineInterface
 	end
 	
 	def about_us
+		
 		puts"
 		╔╦╗╦═╗╔═╗╦╔╗╔╦╔═╗╦ ╦
 		 ║ ╠╦╝╠═╣║║║║║╠╣ ╚╦╝
 		 ╩ ╩╚═╩ ╩╩╝╚╝╩╚   ╩ 
 		
-		"
-
-		puts"1. Exit"
-		my_exit = ""
+		".green
+		exit_menu
 	end
 
 	def contact
@@ -55,7 +57,18 @@ class CommandLineInterface
 		 ║ ╠╦╝╠═╣║║║║║╠╣ ╚╦╝
 		 ╩ ╩╚═╩ ╩╩╝╚╝╩╚   ╩ 
 		
-		"
+		".red
+		exit_menu
+	end
+
+	def exit_menu
+		puts"1. Exit"
+		my_exit = gets.chop
+		if my_exit == "1"
+			run
+		else 
+		puts "Invalid Input"
+		end
 	end
 
  end

@@ -16,18 +16,23 @@ class Member < ActiveRecord::Base
 	  find_trainers.each do |x|
 	  	puts "#{n}. Booked #{x.name} #{x.yrs_of_exp} Years of Experience"
 	  		n += 1
+	  	puts "5. return"
+	  	input = gets.chomp
+	  	if input == "5"
+	  		self.member_menu(self.id)
+	  	end
 	  end
 	end
     
 
     def get_member_profile
     	member_info = Member.all.select{|member| member.id == self.id}
-    	puts "Member ID: #{member_info[0].id}"
-    	puts "First Name: #{member_info[0].first_name}"
-    	puts "Last Name: #{member_info[0].last_name}"
-    	puts "Age: #{member_info[0].age}"
-    	puts "Gender: #{member_info[0].gender}"
-    	puts "Press any key to return to Main Menu."
+    	puts "Member ID: #{member_info[0].id}".blue
+    	puts "First Name: #{member_info[0].first_name}".blue
+    	puts "Last Name: #{member_info[0].last_name}".blue
+    	puts "Age: #{member_info[0].age}".blue
+    	puts "Gender: #{member_info[0].gender}".blue
+    	
     	# iterate through all members
     	# get a member profile using member_id
     	# display profile	
@@ -49,12 +54,12 @@ class Member < ActiveRecord::Base
 			else answer_g == 3
 				gender = "Non-binary"
 			end
-  		@new_member = Member.create(first_name: answer_fn, last_name: answer_ln, age: answer_age, gender: gender)
+  		new_member = Member.create(first_name: answer_fn, last_name: answer_ln, age: answer_age, gender: gender)
   		
-		puts "Welcome  #{@new_member.first_name}"
-		puts "Member id is: #{@new_member.id}.\nSave this for your records."
-		return @new_member.id
-    end
+		puts "Welcome  #{new_member.first_name}!".red
+		puts "Member id is: #{new_member.id}.\nSave this for your records.".yellow
+		self.member_menu(new_member)
+	end
     
 
 	def	self.member_authe(new_a)
@@ -66,6 +71,7 @@ class Member < ActiveRecord::Base
 		 	a2 = STDIN.gets.chomp
 			puts "Welcome: #{Member.find(a2).first_name} #{Member.find(a2).last_name}"
 			return a2
+
 		end
 
 
@@ -100,7 +106,8 @@ class Member < ActiveRecord::Base
 				when "4"
 					#return most pop trainer
 				when "5"
-					Process.exit(0) #terminate the process
+					#terminate the process
+					Process.exit(0)
 			else
  		end
  		
