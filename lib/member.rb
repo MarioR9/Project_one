@@ -10,17 +10,16 @@ class Member < ActiveRecord::Base
     	n = 1
       #member can find all the trainers they have booked.
       #find trainer_id and mache it with trainer book and return trainer 
-	  session_t = Session.all.find_all do|session| 
-	  	session.member == self	
-	  end
+	  session_t = Session.all.find_all {|session|session.member == self}
 	  
+	  # session.trainer_id
 
 	  find_trainers = session_t.map{|session|session.trainer}
 	  #iterating find_trainers to output custome msg for every instance of a trainer stored.
 	  	puts "Booked Sessions"
 	  	 # binding.pry	
-n = 1
 	  find_trainers.each do |trainer|
+
 	  	puts "----------------------------------".green  
        puts "| Booked Trainer: #{trainer.name}".green
        puts "| Yrs exp: #{trainer.yrs_of_exp}".green
@@ -29,16 +28,8 @@ n = 1
         puts "----------------------------------".green 
         n += 1
 	  	end
-	  end
-	#   	binding.pry
-	#   	puts "Press 'C' to cancel a session."
-	#   	cancel_input = STDIN.gets.chomp
-
-	#   if 
-
-	#   else
-	#   	puts "Invalid Input"
-	# end
+	  	
+	end
     
 
     def get_member_profile
@@ -118,23 +109,43 @@ n = 1
 					#return most pop trainer
 					self.member_menu(number)
 				when "5"
-
-					#terminate the process
-					# Process.exit(0)
-					
-
+					Member.find(number).remove_session
 			else
  		end	
 	end 
 
 	def remove_session
-		find_booked_trainers
-	#display current sessions
-	#sellect session to be removed
-	#remove the session
-	
-	end
+		member_session = Session.all.select {|session|session.member == self}
+		member_session.each do |session| 
 
+		 puts"----------------------------------".green  
+       puts "| Booked Trainer: #{session.trainer.name}".green
+       puts "| Yrs exp: #{session.trainer.yrs_of_exp}".green      
+       puts "| Session ID ##{session.id}".green
+        puts "----------------------------------".green 
+
+        counter = 0
+ 		while counter < 1 do
+ 			puts "Press 'x' if you would like to delete this session."
+        	puts "Press 'n' to view the next session."
+        	puts "Press 'e' to exit to Profile Page."
+        	cancel_input = STDIN.gets.chomp
+        		if cancel_input == "x"
+        			session.delete
+        			puts "Session #{session}"
+        				counter = 1
+        			elsif cancel_input == "n"
+        				counter = 1
+        			elsif cancel_input == "e"
+        				counter = 1
+        				Member.member_menu(self.id)
+        				else
+        				puts "Invalid Input."
+        			end
+        		end
+        	end
+        
+	end
 
 
 end 
