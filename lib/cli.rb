@@ -60,7 +60,14 @@ class CommandLineInterface
 		╔╦╗╦═╗╔═╗╦╔╗╔╦╔═╗╦ ╦
 		 ║ ╠╦╝╠═╣║║║║║╠╣ ╚╦╝
 		 ╩ ╩╚═╩ ╩╩╝╚╝╩╚   ╩
+	 C.E.O Mario Rodriguez
+ 	 github.com/marioR9
 
+	 C.E.O Errol Watson
+	 github.com/errolgh
+
+	 C.E.O Angela Mumba
+ 	 github.com/angiemalaika
 		".red
 		exit_menu
 	end

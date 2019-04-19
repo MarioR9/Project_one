@@ -10,7 +10,7 @@ class Trainer < ActiveRecord::Base
     def self.display_all_trainers
         puts "Avalible Trainers:"
 
-    	Trainer.all.map do |trainer|
+    	   Trainer.all.each do |trainer|
         puts "--------------------------".yellow
        puts "| Trainer: #{trainer.name}".yellow
        puts "| Yrs exp: #{trainer.yrs_of_exp}".yellow
@@ -18,7 +18,7 @@ class Trainer < ActiveRecord::Base
         puts "--------------------------".yellow
         sleep(0.1)
 
-		end
+		      end
 
     end
 

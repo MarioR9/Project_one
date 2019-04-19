@@ -20,8 +20,9 @@ class Member < ActiveRecord::Base
        puts "| Session ID ##{n}".green
         puts "----------------------------------".green
         n += 1
+# binding.pry
 	  	end
-
+session_t
 	  end
 
     def get_member_profile
@@ -35,12 +36,13 @@ class Member < ActiveRecord::Base
     	# iterate through all members
     	# get a member profile using member_id
     	# display profile
+      member_info
     end
 
     def remove_session
       member_session = Session.all.select {|session|session.member == self}
       arr_counter = member_session.count
-      member_session.each do |session|
+       arr = member_session.each do |session|
 
            puts"----------------------------------".green
          puts "| Booked Trainer: #{session.trainer.name}".green
@@ -85,6 +87,8 @@ class Member < ActiveRecord::Base
                 end
               end
             end
+        arr
+        # binding.pry
     end
 
   	def self.register_new_user
@@ -107,6 +111,7 @@ class Member < ActiveRecord::Base
   		puts "Welcome  #{new_member.first_name}!".red
   		puts "Member id is: #{new_member.id}.\nSave this for your records.".yellow
   		self.member_menu(new_member.id)
+      return Member.find(new_member.id)
   		# binding.pry
   	end
 
