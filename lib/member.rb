@@ -11,26 +11,18 @@ class Member < ActiveRecord::Base
       #member can find all the trainers they have booked.
       #find trainer_id and mache it with trainer book and return trainer
 	  session_t = Session.all.find_all {|session|session.member == self}
-
-	  # session.trainer_id
-
-	  find_trainers = session_t.map{|session|session.trainer}
-	  #iterating find_trainers to output custome msg for every instance of a trainer stored.
-	  	puts "Booked Sessions"
-	  	 # binding.pry
-	  find_trainers.each do |trainer|
-
+	     puts "Booked Sessions"
+	  find_trainers = session_t.map do |session|session.trainer
 	    	puts "----------------------------------".green
-       puts "| Booked Trainer: #{trainer.name}".green
-       puts "| Yrs exp: #{trainer.yrs_of_exp}".green
-       puts "| id: #{trainer.id}".green
+       puts "| Booked Trainer: #{session.trainer.name}".green
+       puts "| Yrs exp: #{session.trainer.yrs_of_exp}".green
+       puts "| id: #{session.trainer.id}".green
        puts "| Session ID ##{n}".green
         puts "----------------------------------".green
         n += 1
 	  	end
-
-	end
-
+      
+	  end
 
     def get_member_profile
     	member_info = Member.all.select{|member| member.id == self.id}
@@ -45,120 +37,137 @@ class Member < ActiveRecord::Base
     	# display profile
     end
 
-	def self.register_new_user
-		puts "GET STARTED TODAY!\nEnter your first name:"
-		answer_fn = STDIN.gets.chomp
-		puts "Enter your last name:"
-		answer_ln = STDIN.gets.chomp
-		puts "How old are you in years?"
-		answer_age = STDIN.gets.chomp.to_i
-		puts "Enter 1 for female \nEnter 2 for male \nEnter 3 for non-binary"
-		answer_g = STDIN.gets.chomp
-			if answer_g == "1"
-				gender = "Female"
-			elsif answer_g == "2"
-				gender = "Male"
-			else answer_g == "3"
-				gender = "Non-binary"
-			end
-  		new_member = Member.create(first_name: answer_fn, last_name: answer_ln, age: answer_age, gender: gender)
-		puts "Welcome  #{new_member.first_name}!".red
-		puts "Member id is: #{new_member.id}.\nSave this for your records.".yellow
-		self.member_menu(new_member.id)
-		# binding.pry
-	end
+    def remove_session
+      member_session = Session.all.select {|session|session.member == self}
+      arr_counter = member_session.count
+      member_session.each do |session|
 
+           puts"----------------------------------".green
+         puts "| Booked Trainer: #{session.trainer.name}".green
+         puts "| Yrs exp: #{session.trainer.yrs_of_exp}".green
+         puts "| Session ID ##{session.id}".green
+          puts "----------------------------------".green
 
-	def	self.welome_member
- 			puts "Welcome back! \nPlease Enter Member Id"
-		 	member = STDIN.gets.chomp
-			puts "Welcome: #{Member.find(member).first_name} #{Member.find(member).last_name}"
-			self.member_menu(member)
-	end
+          counter = 0
+      while counter < 1 do
+        puts "Press 'x' if you would like to delete this session.".red
+            puts "Press 'n' to view the next session."
+            puts "Press 'e' to exit to Profile Page."
 
- 	#Main menu
- 	def self.member_menu(number)
- 		# counter = 0
- 		# while counter < 1 do
- 		puts "Main Menu"
- 		puts "Select an Option:"
- 		puts "1. View My Profile" #press any key to return to main menu
- 		puts "2. Book a Session"
- 		puts "3. View My Sessions"
- 		puts "4. Featured Trainer" #most pop trainer
- 		puts "5. Cancel a Session"
- 		puts "Press return to Exit"
- 		answer = STDIN.gets.chomp
- 			case answer
-				when "1"
-				Member.find(number).get_member_profile#take cli to member profile
-				self.member_menu(number)
-				when "2"
-					puts "TRAINIFY \nTrainers"
-					Trainer.display_all_trainers
-					puts "  "
-					puts "Input Trainer's Id to booked"
-					t_id = STDIN.gets.chomp
-					Session.book_session(number,t_id)
-				self.member_menu(number)
-					# binding.pry
-				when "3"
-				Member.find(number).find_booked_trainers#return all sessions for that member
-				self.member_menu(number)
-				when "4"
-					#return most pop trainer
-					self.member_menu(number)
-				when "5"
-					Member.find(number).remove_session
-			else
- 		end
-	end
+            cancel_input = STDIN.gets.chomp
+              if cancel_input == "x"
+                session.delete
+              puts '/*************************************/'.yellow
+              puts "            Session #{session.id} Deleted".yellow
+              puts '/*************************************/'.yellow
 
-	def remove_session
-		member_session = Session.all.select {|session|session.member == self}
-    session_count = member_session.count
-		member_session.each do |session|
-
-		     puts"----------------------------------".green
-       puts "| Booked Trainer: #{session.trainer.name}".green
-       puts "| Yrs exp: #{session.trainer.yrs_of_exp}".green
-       puts "| Session ID ##{session.id}".green
-        puts "----------------------------------".green
-
-        counter = 0
- 		while counter < 1 do
- 			puts "Press 'x' if you would like to delete this session."
-        	puts "Press 'n' to view the next session."
-        	puts "Press 'e' to exit to Profile Page."
-        	cancel_input = STDIN.gets.chomp
-        		if cancel_input == "x"
-        			session.delete
-        			puts "Session #{session}"
-        				counter = 1
+                arr_counter -= 1
+                counter = 1
+                if arr_counter == 0
                 Member.member_menu(self.id)
-        			elsif cancel_input == "n"
-                
-                if session_count < 0
-                  session_count -= 1
-                  puts "You have no more booked sessions."
+                end
+                elsif
+                  cancel_input == "n"
+                    arr_counter -= 1
                   counter = 1
-                  puts "Press '5' to return to the main menu."
-                end_of_list_input = STDIN.gets.chomp
-                if end_of_list_input == 5
+                  if arr_counter == 0
                   Member.member_menu(self.id)
-                else
+                  end
+                  # binding.pry
+                  elsif cancel_input == "e"
+                    arr_counter -= 1
+                  counter = 1
+                  if arr_counter == 0
+                  Member.member_menu(self.id)
+                  end
+                  else
                   puts "Invalid Input."
-                    end
-                elsif cancel_input == "e"
-        				counter = 1
-        				Member.member_menu(self.id)
-        				else
-        				puts "Invalid Input."
-        			end
-        		end
-        	end
-        end
-      	end
+                end
+              end
+            end
+    end
+
+  	def self.register_new_user
+  		puts "GET STARTED TODAY!\nEnter your first name:"
+  		answer_fn = STDIN.gets.chomp
+  		puts "Enter your last name:"
+  		answer_ln = STDIN.gets.chomp
+  		puts "How old are you in years?"
+  		answer_age = STDIN.gets.chomp.to_i
+  		puts "Enter 1 for female \nEnter 2 for male \nEnter 3 for non-binary"
+  		answer_g = STDIN.gets.chomp
+  			if answer_g == "1"
+  				gender = "Female"
+  			elsif answer_g == "2"
+  				gender = "Male"
+  			else answer_g == "3"
+  				gender = "Non-binary"
+  			end
+    		new_member = Member.create(first_name: answer_fn, last_name: answer_ln, age: answer_age, gender: gender)
+  		puts "Welcome  #{new_member.first_name}!".red
+  		puts "Member id is: #{new_member.id}.\nSave this for your records.".yellow
+  		self.member_menu(new_member.id)
+  		# binding.pry
+  	end
+
+  	def	self.welome_member
+   			puts "Welcome back! \nPlease Enter Member Id"
+  		 	member = STDIN.gets.chomp
+  			puts "Welcome: #{Member.find(member).first_name} #{Member.find(member).last_name}"
+  			self.member_menu(member)
+  	end
+
+   	#Main menu
+   	def self.member_menu(number)
+
+   		# counter = 0
+   		# while counter < 1 do
+   		puts "Main Menu"
+   		puts "Select an Option:"
+   		puts "1. View My Profile" #press any key to return to main menu
+   		puts "2. Book a Session"
+   		puts "3. View My Sessions"
+   		puts "4. Featured Trainer" #most pop trainer
+   		puts "5. Cancel a Session"
+   		puts "Press return to Exit"
+   		answer = STDIN.gets.chomp
+      counter = Member.find(number).sessions.count
+   			case answer
+  				when "1"
+  				Member.find(number).get_member_profile#take cli to member profile
+  				self.member_menu(number)
+  				when "2"
+  					puts "TRAINIFY \nTrainers"
+  					Trainer.display_all_trainers
+  					puts "  "
+  					puts "Input Trainer's Id to booked"
+  					t_id = STDIN.gets.chomp
+  					Session.book_session(number,t_id)
+  				self.member_menu(number)
+  					# binding.pry
+  				when "3"
+  				Member.find(number).find_booked_trainers#return all sessions for that member
+  				self.member_menu(number)
+  				when "4"
+  					#return most pop trainer
+  					self.member_menu(number)
+  				when "5"
+            if counter <= 0
+
+            puts "/*************************************/".red
+            puts "/*      Not sessions booked          */".red
+            puts "/*************************************/".red
+
+               sleep(2)
+             else
+               Member.find(number).remove_session
+          end
+   		 end
+  	end
+
+
+
+
 
 
 end

@@ -2,9 +2,9 @@ require 'pry'
 require 'colorize'
 
 
-class CommandLineInterface 
+class CommandLineInterface
 
-	
+
 	def run
 		counter = 0
 		while counter <1
@@ -12,14 +12,16 @@ class CommandLineInterface
 	#main menu
 		end
 	end
-	
+
 	def member_intro
- 		puts"
-		╔╦╗╦═╗╔═╗╦╔╗╔╦╔═╗╦ ╦
-		 ║ ╠╦╝╠═╣║║║║║╠╣ ╚╦╝
-		 ╩ ╩╚═╩ ╩╩╝╚╝╩╚   ╩ 
-		
-		".blue #TTY
+		logo
+ 		# puts"
+		# ╔╦╗╦═╗╔═╗╦╔╗╔╦╔═╗╦ ╦
+		#  ║ ╠╦╝╠═╣║║║║║╠╣ ╚╦╝
+		#  ╩ ╩╚═╩ ╩╩╝╚╝╩╚   ╩
+		#
+		# ".blue #TTY
+
  		puts "1. About Us"
 		puts "2. Become a Member?"
 		puts "3. Log In"
@@ -36,28 +38,29 @@ class CommandLineInterface
 			Member.register_new_user
 		elsif m_a == "3"
 			Member.welome_member
-			
-		end	
+
+		end
 
 	end
-	
+
 	def about_us
-		
+
 		puts"
 		╔╦╗╦═╗╔═╗╦╔╗╔╦╔═╗╦ ╦
 		 ║ ╠╦╝╠═╣║║║║║╠╣ ╚╦╝
-		 ╩ ╩╚═╩ ╩╩╝╚╝╩╚   ╩ 
-		
+		 ╩ ╩╚═╩ ╩╩╝╚╝╩╚   ╩
+
 		".green
 		exit_menu
 	end
 
 	def contact
+
 		puts"
 		╔╦╗╦═╗╔═╗╦╔╗╔╦╔═╗╦ ╦
 		 ║ ╠╦╝╠═╣║║║║║╠╣ ╚╦╝
-		 ╩ ╩╚═╩ ╩╩╝╚╝╩╚   ╩ 
-		
+		 ╩ ╩╚═╩ ╩╩╝╚╝╩╚   ╩
+
 		".red
 		exit_menu
 	end
@@ -67,9 +70,20 @@ class CommandLineInterface
 		my_exit = gets.chop
 		if my_exit == "1"
 			run
-		else 
+		else
 		puts "Invalid Input"
 		end
 	end
+
+	def logo
+ puts "          _                 _
+    _  _ | |               | | _  _
+   | || || |               | || || |
+ =H| || || |===TRAINIFY====| || || |H=
+   |_||_|| |               | ||_||_|
+         |_|               |_|".yellow
+	end
+
+
 
  end

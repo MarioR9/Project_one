@@ -8,8 +8,3 @@ gem "require_all"
 gem "pry-byebug"
 gem 'colorize'
 gem "rspec"
-
-
-
-
-
