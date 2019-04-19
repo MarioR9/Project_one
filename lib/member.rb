@@ -21,7 +21,7 @@ class Member < ActiveRecord::Base
         puts "----------------------------------".green
         n += 1
 	  	end
-      
+
 	  end
 
     def get_member_profile
@@ -149,13 +149,13 @@ class Member < ActiveRecord::Base
   				Member.find(number).find_booked_trainers#return all sessions for that member
   				self.member_menu(number)
   				when "4"
-  					#return most pop trainer
+  					Member.find(number).featured_trainer
   					self.member_menu(number)
   				when "5"
             if counter <= 0
 
             puts "/*************************************/".red
-            puts "/*      Not sessions booked          */".red
+            puts "/*      No sessions booked           */".red
             puts "/*************************************/".red
 
                sleep(2)
@@ -165,7 +165,24 @@ class Member < ActiveRecord::Base
    		 end
   	end
 
-
+    def featured_trainer
+      arr = Session.all.map do |session|
+        session.trainer.id
+      end
+      most_pop_trainer = arr.group_by(&:to_s).values.max_by(&:size).try(:first)
+      f_trainer = Trainer.find(most_pop_trainer)
+      puts "#{f_trainer.name} is the featured trainer! #{f_trainer.name} has #{f_trainer.yrs_of_exp} years of experience."
+      sleep(1)
+      puts "Would you like to book a session with #{f_trainer.name}?"
+      puts "Press 'b' to book a session, 'x' to return to the Main Menu."
+      feature_book = STDIN.gets.chomp
+        if feature_book == "b"
+          Session.book_session(self.id,f_trainer.id)
+        Member.member_menu(self.id)
+      elsif feature_book == "x"
+        Member.member_menu(self.id)
+      end
+    end
 
 
 
