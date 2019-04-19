@@ -49,8 +49,9 @@ class CommandLineInterface
 		╔╦╗╦═╗╔═╗╦╔╗╔╦╔═╗╦ ╦
 		 ║ ╠╦╝╠═╣║║║║║╠╣ ╚╦╝
 		 ╩ ╩╚═╩ ╩╩╝╚╝╩╚   ╩
-
 		".green
+		puts "The Ultimate Trainer Booking Application"
+
 		exit_menu
 	end
 
